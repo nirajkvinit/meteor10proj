@@ -41,6 +41,14 @@ li {
   border-bottom: #eee solid 1px;
 }
 
+li.checked {
+  color: #ccc;  
+}
+
+li.checked .text {
+  text-decoration: line-through;
+}
+
 .delete-todo {
   float: right;
   font-weight: bold;
@@ -50,6 +58,7 @@ li {
   position: relative;
   color: red;
 }
+
 
 /* Customize container */
 @media (min-width: 768px) {
