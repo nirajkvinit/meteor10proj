@@ -5,5 +5,8 @@ meteor add accounts-ui accounts-password
 # Remove insecure
 meteor remove insecure
 
-#Remove Autopublish
+# Remove Autopublish
 meteor remove autopublish
+
+# Deploy meteor app
+meteor deploy <meteor app name>
