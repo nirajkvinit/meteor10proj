@@ -1,6 +1,9 @@
 Todos = new Mongo.Collection('todos');
 
-if (Meteor.isClient) {  
+if (Meteor.isClient) {
+
+  Meteor.subscribe('todos');
+
   // Template Helpers
   Template.main.helpers({
     todos: function(){
@@ -34,6 +37,18 @@ if (Meteor.isClient) {
   });
 }
 
+// Server code
+if (Meteor.isServer) {
+  Meteor.publish('todos', function(){
+    if(this.userId) {
+      return Todos.find({userId: this.userId});
+    } else {
+      return Todos.find();
+    }
+    
+  });
+}
+
 //Meteor Methods
 Meteor.methods({
   addTodo: function(text){
@@ -48,14 +63,20 @@ Meteor.methods({
       });
   },
   deleteTodo: function(todoId){
+    var todo = Todos.findOne(todoId);
+    if(todo.userId !== Meteor.userId()) {
+      throw Meteor.Error('not-authorized');
+    }
     Todos.remove(todoId);
   },
   setChecked: function(todoId, setChecked){
+    var todo = Todos.findOne(todoId);
+    if(todo.userId !== Meteor.userId()) {
+      throw new Meteor.Error('Not authorized');
+    }
     Todos.update(todoId, {$set: {checked: setChecked}})
   }
 });
 
-if (Meteor.isServer) {
-  
-}
+
 

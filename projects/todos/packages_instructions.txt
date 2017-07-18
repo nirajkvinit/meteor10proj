@@ -4,3 +4,6 @@ meteor add accounts-ui accounts-password
 
 # Remove insecure
 meteor remove insecure
+
+#Remove Autopublish
+meteor remove autopublish
