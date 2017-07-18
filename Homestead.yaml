@@ -1,0 +1,33 @@
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+provider: virtualbox
+
+folders:
+    - map: /home/niraj/code/meteor10proj
+      to: /home/vagrant/Code
+
+sites:
+    - map: homestead.app
+      to: /home/vagrant/Code/Project/public
+
+databases:
+    - homestead
+
+variables:
+    - key: APP_ENV
+      value: local
+
+# blackfire:
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
+
+ports:
+     - send: 3000
+       to: 3000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
