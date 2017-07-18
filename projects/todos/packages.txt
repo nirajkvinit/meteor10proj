@@ -1,2 +1,6 @@
 # Packages
 meteor add twps:bootstrap
+meteor add accounts-ui accounts-password
+
+# Remove insecure
+meteor remove insecure
