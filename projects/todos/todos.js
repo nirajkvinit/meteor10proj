@@ -1,4 +1,9 @@
-Todos = new Mongo.Collection('todos');
+try {
+    Todos = new Mongo.Collection('todos');
+} catch (e) {
+  console.log(e);
+}
+
 
 if (Meteor.isClient) {
 
@@ -18,6 +23,7 @@ if (Meteor.isClient) {
       Meteor.call('addTodo', text);
       event.target.text.value = "";
       return false;
+
     },
 
     "click .toggle-checked": function(){
@@ -55,27 +61,40 @@ Meteor.methods({
     if(!Meteor.userId()) {
       throw new Meteor.Error('Not authorized');
     }
-    if(text.length > 0) {
-      Todos.insert({
-          text: text,
-          createdAt: new Date(),
-          userId: Meteor.userId(),
-          username: Meteor.user().username
-      });
+    try {
+      if(text.length > 0) {
+        Todos.insert({
+            text: text,
+            createdAt: new Date(),
+            userId: Meteor.userId(),
+            username: Meteor.user().username
+        });
+      }
+    } catch (e) {
+        console.log(e);
     }
   },
   deleteTodo: function(todoId){
-    var todo = Todos.findOne(todoId);
-    if(todo.userId !== Meteor.userId()) {
-      throw Meteor.Error('not-authorized');
+    try {
+      var todo = Todos.findOne(todoId);
+      if(todo.userId !== Meteor.userId()) {
+        throw Meteor.Error('not-authorized');
+      }
+      Todos.remove(todoId);
+    } catch (e) {
+        console.log(e);
     }
-    Todos.remove(todoId);
+
   },
   setChecked: function(todoId, setChecked){
-    var todo = Todos.findOne(todoId);
-    if(todo.userId !== Meteor.userId()) {
-      throw new Meteor.Error('Not authorized');
+    try {
+      var todo = Todos.findOne(todoId);
+      if(todo.userId !== Meteor.userId()) {
+        throw new Meteor.Error('Not authorized');
+      }
+      Todos.update(todoId, {$set: {checked: setChecked}})
+    } catch (e) {
+        console.log(e);
     }
-    Todos.update(todoId, {$set: {checked: setChecked}})
   }
 });
