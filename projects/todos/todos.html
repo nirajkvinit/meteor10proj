@@ -2,7 +2,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>myTodos</title>
 </head>
@@ -10,11 +10,11 @@
 <body>
 
 	<div class="container">
-	  <div class="header clearfix">	    
+	  <div class="header clearfix">
 	    <h3 class="text-muted">myTodos</h3>
 	    {{> loginButtons}}
 	  </div>
-	  
+
 	  <div class="row marketing">
 	    <div class="col-lg-12">
 	      {{> main}}
@@ -36,16 +36,19 @@
 				<input type="text" placeholder="Type a todo..." class="form-control" name="text">
 			</div>
 		</form>
+		<div id="todo_error">
+			This is a test.
+		</div>
 	{{/if}}
 	<ul>
 		{{#each todos}}
 			<li class="{{#if checked}}checked{{/if}}">
 				{{#if currentUser}}
-					<button class="delete-todo">&times;</button>				
+					<button class="delete-todo">&times;</button>
 					<input type="checkbox" checked="{{checked}}" class="toggle-checked">
 				{{/if}}
 				<span class="text">
-					{{text}}		
+					{{text}}
 				</span>
 			</li>
 		{{/each}}
